@@ -1,45 +1,61 @@
-import { defineConfig, loadEnv } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+import viteReact from "@vitejs/plugin-react";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { nitro } from "nitro/vite";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-export default defineConfig(({ mode, command }) => {
-  const env = loadEnv(mode, process.cwd(), "VITE_");
-  const envDefine = Object.fromEntries(
-    Object.entries(env).map(([key, value]) => [`import.meta.env.${key}`, JSON.stringify(value)]),
-  );
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  return {
-    define: envDefine,
-    css: { transformer: "lightningcss" },
-    resolve: {
-      alias: { "@": `${process.cwd()}/src` },
-      dedupe: [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "react/jsx-dev-runtime",
-        "@tanstack/react-query",
-        "@tanstack/query-core",
-      ],
+// Standard TanStack Start + Vite setup: Tailwind, TS path aliases, the
+// TanStack Start SSR plugin, a Nitro server build, and the React plugin.
+// No external config wrapper — every plugin here is a direct, public
+// dependency already listed in package.json.
+export default defineConfig({
+  css: {
+    transformer: "lightningcss",
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
     },
-    optimizeDeps: {
-      include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "react/jsx-dev-runtime"],
-    },
-    server: { host: true, port: 8080 },
-    plugins: [
-      tailwindcss(),
-      tsConfigPaths({ projects: ["./tsconfig.json"] }),
-      // Redirects TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-      tanstackStart({ server: { entry: "server" } }),
-      // Only used for the production build — the deploy target is picked via
-      // NITRO_PRESET (see vercel.json); falls back to a plain Node build otherwise.
-      command === "build"
-        ? nitro(process.env["NITRO_PRESET"] ? { preset: process.env["NITRO_PRESET"] } : {})
-        : undefined,
-      react(),
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "@tanstack/react-query",
+      "@tanstack/query-core",
     ],
-  };
+  },
+  server: {
+    host: "::",
+    port: 8080,
+  },
+  plugins: [
+    tailwindcss(),
+    tsConfigPaths({ projects: ["./tsconfig.json"] }),
+    tanstackStart({
+      importProtection: {
+        behavior: "error",
+        client: {
+          files: ["**/server/**"],
+          specifiers: ["server-only"],
+        },
+      },
+      // Redirect TanStack Start's bundled server entry to src/server.ts
+      // (our SSR error wrapper). Nitro builds from this.
+      server: { entry: "server" },
+    }),
+    nitro(
+      process.env["NITRO_PRESET"]
+        ? { preset: process.env["NITRO_PRESET"] }
+        : process.env["VERCEL"]
+          ? { preset: "vercel" }
+          : {},
+    ),
+    viteReact(),
+  ],
 });

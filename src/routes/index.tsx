@@ -1,64 +1,182 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { Nav } from "@/components/site/Nav";
-import { Hero } from "@/components/site/Hero";
-import { Folio } from "@/components/site/Folio";
-import { Capabilities } from "@/components/site/Capabilities";
-import { LovableStripeShowcase } from "@/components/site/LovableStripeShowcase";
-import { GridlineSection } from "@/components/site/GridlineSection";
-import { FeatureFlashcards } from "@/components/site/FeatureFlashcards";
-import { DeepDive } from "@/components/site/DeepDive";
-import { Privacy } from "@/components/site/Privacy";
-import { Closing } from "@/components/site/Closing";
-import { TopBlob } from "@/components/site/TopBlob";
-import { Cursor } from "@/components/site/Cursor";
-import { WaitlistDialog } from "@/components/site/WaitlistDialog";
-import { Toaster } from "@/components/ui/sonner";
-import { initSound } from "@/lib/sound";
-
-const title = "Substrate — the layer software grows on";
-const description =
-  "Substrate is a research and product studio for ambient computing, and the parent company of Folio, Kernel, and Gridline.";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { LatticeDiagram } from "@/components/LatticeDiagram";
+import { SpectralMark } from "@/components/SpectralMark";
+import { SignalDoodle } from "@/components/SignalDoodle";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: "/og-image.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: title },
-      { name: "twitter:description", content: description },
-      { name: "twitter:image", content: "/og-image.png" },
+      { title: "Substrate — Kernel, VOID & Folio" },
+      {
+        name: "description",
+        content:
+          "Substrate is a research and product studio building Kernel, a multimodal LLM, VOID, a minimalist browser, and Folio, a quiet operating surface for your day.",
+      },
+      { property: "og:title", content: "Substrate — Kernel, VOID & Folio" },
+      {
+        property: "og:description",
+        content:
+          "A research and product studio for the ambient computer: a multimodal model, a browser, and the surface you work on.",
+      },
     ],
   }),
   component: Index,
 });
 
 function Index() {
-  useEffect(() => {
-    initSound();
-  }, []);
-
   return (
-    <main className="relative min-h-screen bg-background">
-      <Cursor />
-      <TopBlob />
-      <Nav />
-      <Hero />
-      <Folio />
-      <Capabilities />
-      <LovableStripeShowcase />
-      <GridlineSection />
-      <FeatureFlashcards />
-      <DeepDive />
-      <Privacy />
-      <Closing />
-      <WaitlistDialog />
-      <Toaster />
-    </main>
+    <>
+      <section className="relative isolate overflow-hidden">
+        <div className="spectral-field" aria-hidden="true" />
+        <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-28 text-center sm:py-36">
+          <SpectralMark variant="substrate" className="rise-in mb-6 h-20 w-20 shadow-md" />
+          <p className="rule-label rise-in">The layer underneath</p>
+          <h1 className="rise-in mt-8 text-5xl leading-[1.05] text-foreground sm:text-7xl">
+            We build the ground
+            <br />
+            software grows on.
+          </h1>
+          <p className="rise-in mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            A research and product studio for the ambient computer. Three things underway:{" "}
+            <span className="text-foreground">Kernel</span>, a multimodal LLM,{" "}
+            <span className="text-foreground">VOID</span>, a minimalist browser, and{" "}
+            <span className="text-foreground">Folio</span>, the surface you work on.
+          </p>
+          <SignalDoodle
+            className="rise-in mt-6 h-8 w-48 text-muted-foreground sm:w-64"
+            aria-hidden="true"
+          />
+          <div className="rise-in mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+            <Link
+              to="/kernel"
+              className="rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Meet Kernel
+            </Link>
+            <Link
+              to="/void"
+              className="group inline-flex items-center gap-2 text-sm text-foreground"
+            >
+              VOID Browser
+              <span className="text-muted-foreground transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border/70 bg-card">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-px bg-border/70 sm:grid-cols-3">
+          <ProductCard
+            to="/kernel"
+            label="Kernel"
+            status="In training"
+            title="One model, every modality"
+            body="Text, images, audio and video in a single context — one representation instead of a stack of translators."
+            media={<SpectralMark variant="kernel" className="h-16 w-16" />}
+          />
+          <ProductCard
+            to="/void"
+            label="VOID Browser"
+            status="Pre-production"
+            title="Nothing in the way"
+            body="The page, the model and your intent on the same surface. No tab sprawl, no chrome you did not ask for."
+            media={<SpectralMark variant="void" className="h-16 w-16 text-foreground" />}
+          />
+          <ProductCard
+            to="/folio"
+            label="Folio"
+            status="Private beta"
+            title="The quiet operating surface"
+            body="Weather, news, files, memory, agents and deep research on one canvas that already knows your morning."
+            media={<SpectralMark variant="folio" className="h-16 w-16" />}
+          />
+        </div>
+      </section>
+
+      <section className="relative isolate overflow-hidden">
+        <div className="spectral-field spectral-field-soft" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-5xl items-center gap-14 px-6 py-24 sm:py-32 lg:grid-cols-2">
+          <div>
+            <p className="rule-label">One substrate</p>
+            <h2 className="mt-4 text-3xl leading-tight text-foreground sm:text-4xl">
+              Three products, one shared ground
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
+              The same runtime, the same memory, the same notion of context runs under all of it.
+              Drag the lattice — every node is a shared slot, every edge a route between the pieces.
+            </p>
+            <Link
+              to="/studio"
+              className="group mt-8 inline-flex items-center gap-2 text-sm text-foreground"
+            >
+              How we build
+              <span className="text-muted-foreground transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </Link>
+          </div>
+          <LatticeDiagram className="aspect-square rounded-2xl border border-border/70 bg-card/50" />
+        </div>
+      </section>
+
+      <section className="relative isolate overflow-hidden border-t border-border/70">
+        <div className="relative mx-auto max-w-2xl px-6 py-28 text-center sm:py-32">
+          <h2 className="text-4xl leading-tight text-foreground sm:text-5xl">
+            Early, and open to company
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
+            If you are building at the same layer — models, runtimes, browsers — we would like to
+            hear from you.
+          </p>
+          <a
+            href="mailto:hello@substrate.dev"
+            className="mt-10 inline-block rounded-full bg-primary px-7 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            Get in touch
+          </a>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function ProductCard({
+  to,
+  label,
+  status,
+  title,
+  body,
+  media,
+}: {
+  to: "/kernel" | "/void" | "/folio";
+  label: string;
+  status: string;
+  title: string;
+  body: string;
+  media: React.ReactNode;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group flex flex-col bg-card px-8 py-12 transition-colors hover:bg-accent/40"
+    >
+      {media}
+      <div className="mt-8 flex items-center gap-3">
+        <p className="rule-label">{label}</p>
+        <span className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.5625rem] uppercase tracking-[0.18em] text-muted-foreground">
+          {status}
+        </span>
+      </div>
+      <h3 className="mt-3 text-2xl leading-snug text-foreground">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+      <span className="mt-6 inline-flex items-center gap-2 text-sm text-foreground">
+        Read more
+        <span className="text-muted-foreground transition-transform group-hover:translate-x-0.5">
+          →
+        </span>
+      </span>
+    </Link>
   );
 }

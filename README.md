@@ -1,11 +1,10 @@
-# Substrate — Folio's AI Experience
+# Substrate
 
-The marketing site for Substrate, a research and product studio for ambient
-computing, and the parent company of Folio — a personal AI assistant and
-agent dashboard.
+The website for Substrate — a research and product studio building **Kernel**
+(a multimodal LLM), **VOID** (a minimalist browser), and **Folio** (a quiet
+operating surface for your day) on one shared runtime.
 
-Built with TanStack Start (React 19), Vite, Tailwind CSS 4, shadcn/ui, and
-Motion, deployed on Vercel via Nitro.
+Built with TanStack Start, React, Tailwind CSS v4, and shadcn/ui.
 
 ## Development
 
@@ -13,18 +12,27 @@ You'll need Node.js 20+ and npm.
 
 ```sh
 git clone <this-repository-url>
-cd <repository-name>
+cd kernel-void-hub
 npm install
 npm run dev
 ```
 
 The dev server runs at `http://localhost:8080`.
 
-## Build
+## Scripts
 
-```sh
-NITRO_PRESET=vercel npm run build
+- `npm run dev` — start the dev server
+- `npm run build` — production build
+- `npm run preview` — preview the production build locally
+- `npm run lint` — run ESLint
+- `npm run format` — run Prettier
+
+## Project structure
+
 ```
-
-Outputs a deployable bundle to `.vercel/output`. See `DEPLOY.md` for the full
-Vercel deployment walkthrough.
+src/
+  components/   Shared UI primitives (shadcn/ui) and site-specific
+                components (SpectralMark, LatticeDiagram, BenchRadar, etc.)
+  routes/       File-based routes (TanStack Router) — one file per page
+  styles.css    Design tokens and global styles (Tailwind v4 + custom theme)
+```
