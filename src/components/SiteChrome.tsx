@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { SpectralMark } from "@/components/SpectralMark";
+import { FooterSpectralBanner } from "@/components/site/FooterSpectralBanner";
 
 const nav = [
   { to: "/kernel", label: "Kernel" },
@@ -36,6 +37,9 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="relative isolate mt-0 overflow-hidden border-t border-border/70">
+      {/* Image 4 Spectral Grain Noise Banner */}
+      <FooterSpectralBanner />
+
       <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-12 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2.5">
           <SpectralMark variant="substrate" className="h-5 w-5 text-foreground" />
@@ -53,7 +57,7 @@ export function SiteFooter() {
           ))}
         </nav>
         <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Substrate. Kernel · VOID · Folio
+          © {new Date().getFullYear()} Substrate. Kernel · VOID · Folio · Gridline
         </p>
       </div>
       {/* Chromatic base band — the RGB ambience settling at the foot of the page */}
