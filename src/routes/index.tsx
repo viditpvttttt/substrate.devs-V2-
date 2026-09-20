@@ -4,6 +4,8 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Folio } from "@/components/site/Folio";
 import { Capabilities } from "@/components/site/Capabilities";
+import { LovableStripeShowcase } from "@/components/site/LovableStripeShowcase";
+import { GridlineSection } from "@/components/site/GridlineSection";
 import { FeatureFlashcards } from "@/components/site/FeatureFlashcards";
 import { DeepDive } from "@/components/site/DeepDive";
 import { Privacy } from "@/components/site/Privacy";
@@ -16,7 +18,7 @@ import { initSound } from "@/lib/sound";
 
 const title = "Substrate — the layer software grows on";
 const description =
-  "Substrate is a research and product studio for ambient computing, and the parent company of Folio, a personal AI assistant and agent dashboard.";
+  "Substrate is a research and product studio for ambient computing, and the parent company of Folio, Kernel, and Gridline.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,6 +51,8 @@ function Index() {
       <Hero />
       <Folio />
       <Capabilities />
+      <LovableStripeShowcase />
+      <GridlineSection />
       <FeatureFlashcards />
       <DeepDive />
       <Privacy />

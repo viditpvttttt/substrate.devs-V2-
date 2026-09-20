@@ -3,14 +3,15 @@ import markUrl from "@/assets/substrate-mark.png";
 import { openWaitlist } from "./WaitlistDialog";
 import { sfx } from "@/lib/sound";
 import { Aurora } from "./Aurora";
+import { FooterSpectralBanner } from "./FooterSpectralBanner";
 
 const columns = [
   {
-    title: "Folio",
+    title: "Products",
     links: [
-      { label: "Overview", href: "#folio" },
-      { label: "Workbench", href: "#folio-detail" },
-      { label: "Work mode", href: "#folio-detail" },
+      { label: "Kernel", href: "#top" },
+      { label: "Folio", href: "#folio" },
+      { label: "Gridline", href: "#capabilities" },
       { label: "Release notes", href: "#top" },
       { label: "Download", href: "#waitlist" },
     ],
@@ -30,6 +31,7 @@ const columns = [
     links: [
       { label: "About us", href: "#company" },
       { label: "Research", href: "#capabilities" },
+      { label: "Leadership", href: "#company" },
     ],
   },
   {
@@ -62,7 +64,7 @@ export function Closing() {
           <button
             onMouseEnter={sfx.hover}
             onClick={openWaitlist}
-            className="relative overflow-hidden rounded-2xl bg-primary px-8 py-4 text-[15px] font-medium text-primary-foreground transition-transform duration-300 hover:-translate-y-1"
+            className="relative overflow-hidden rounded-2xl bg-primary px-8 py-4 text-[15px] font-medium text-primary-foreground transition-transform duration-300 hover:-translate-y-1 shadow-lg"
           >
             Join the Waitlist
           </button>
@@ -73,7 +75,10 @@ export function Closing() {
         </p>
       </div>
 
-      <footer className="relative z-10 mx-auto max-w-6xl px-6 pb-16">
+      {/* Image 4 Footer Spectral Grain Gradient Bar */}
+      <FooterSpectralBanner />
+
+      <footer className="relative z-10 mx-auto max-w-6xl px-6 pt-12 pb-16">
         <div className="grid gap-10 border-t border-border/60 pt-12 sm:grid-cols-2 lg:grid-cols-5">
           {columns.map((column) => (
             <div key={column.title}>
