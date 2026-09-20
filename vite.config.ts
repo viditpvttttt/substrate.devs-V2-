@@ -9,10 +9,8 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Standard TanStack Start + Vite setup: Tailwind, TS path aliases, the
-// TanStack Start SSR plugin, a Nitro server build, and the React plugin.
-// No external config wrapper — every plugin here is a direct, public
-// dependency already listed in package.json.
+const preset = process.env["NITRO_PRESET"]?.trim() || (process.env["VERCEL"] ? "vercel" : undefined);
+
 export default defineConfig({
   css: {
     transformer: "lightningcss",
@@ -45,17 +43,9 @@ export default defineConfig({
           specifiers: ["server-only"],
         },
       },
-      // Redirect TanStack Start's bundled server entry to src/server.ts
-      // (our SSR error wrapper). Nitro builds from this.
       server: { entry: "server" },
     }),
-    nitro(
-      process.env["NITRO_PRESET"]
-        ? { preset: process.env["NITRO_PRESET"] }
-        : process.env["VERCEL"]
-          ? { preset: "vercel" }
-          : {},
-    ),
+    nitro(preset ? { preset } : {}),
     viteReact(),
   ],
 });
